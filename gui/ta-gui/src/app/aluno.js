@@ -8,6 +8,7 @@ class Aluno {
         this.nome = "";
         this.cpf = "";
         this.email = "";
+        this.git = "";
         this.metas = new Map();
     }
     clone() {
@@ -20,6 +21,7 @@ class Aluno {
         this.nome = from.nome;
         this.cpf = from.cpf;
         this.email = from.email;
+        this.git = from.git;
         this.copyMetasFrom(from.metas);
     }
     copyMetasFrom(from) {
