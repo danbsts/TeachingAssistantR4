@@ -29,6 +29,15 @@ export class AlunoService {
          .catch(this.tratarErro);
  }
 
+ deletar(aluno: Aluno): Promise<Aluno> {
+  return this.http.put(this.taURL + "/alunoDelete",JSON.stringify(aluno), {headers: this.headers})
+       .toPromise()
+       .then(res => {
+          if (res.json().success) {return aluno;} else {return null;}
+       })
+       .catch(this.tratarErro);
+}
+
   getAlunos(): Promise<Aluno[]> {
   return this.http.get(this.taURL + "/alunos")
            .toPromise()

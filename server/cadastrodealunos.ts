@@ -27,6 +27,12 @@ export class CadastroDeAlunos {
     return result;
   }
 
+  deletar(aluno: Aluno): Aluno {
+    var result: Aluno = this.alunos.find(a => a.cpf == aluno.cpf);
+    if (result) this.alunos.splice(this.alunos.indexOf(result), 1);
+    return result;
+  }
+
   getAlunos(): Aluno[] {
     return this.alunos;
   }

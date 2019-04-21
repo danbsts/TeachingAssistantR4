@@ -19,7 +19,7 @@
 </tr>
 <tr>
    <td><label>Github </label></td>
-   <td><input [(ngModel)]="aluno.giy" ></td>
+   <td><input [(ngModel)]="aluno.git" ></td>
 </tr>
 </table>
 
@@ -35,6 +35,7 @@
    <td>{{a.cpf}}</td>
    <td>{{a.email}}</td>
    <td>{{a.git}}</td>
+   <td><button style="background-color: red; color: white;" (click)="deletarAluno(a)">Deletar</button></td>
 </tr>
 </table>
 
