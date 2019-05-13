@@ -24,7 +24,30 @@ defineSupportCode(function ({ Given, When, Then }) {
                                       elem.getText().then(text => text === cpf));
         await samecpfs;
         await samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
+    })
+    
+    Given(/^I can see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
+        var allcpfs : ElementArrayFinder = element.all(by.name('cpflist'));
+        await allcpfs;
+        var samecpfs = allcpfs.filter(elem =>
+                                      elem.getText().then(text => text === cpf));
+        await samecpfs;
+        await samecpfs.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
     });
+
+    When(/^I try to delete the student "([^\"]*)" with CPF "(\d*)"$/, async (name, cpf) => {
+        var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
+        var samenamecpf = allalunos.filter(elem => sameCPF(elem,cpf) && sameName(elem, name));
+        await samenamecpf;
+        await samenamecpf.get(0).element(by.name('remover')).click();
+    })
+
+    When(/^I try to register the student "([^\"]*)" with CPF "(\d*)" and github "([^\"]*)"$/, async (name, cpf, github) => {
+        await $("input[name='namebox']").sendKeys(<string> name);
+        await $("input[name='cpfbox']").sendKeys(<string> cpf);
+        await $("input[name='gitbox']").sendKeys(<string> github);
+        await element(by.buttonText('Adicionar')).click();
+    })
 
     When(/^I try to register the student "([^\"]*)" with CPF "(\d*)"$/, async (name, cpf) => {
         await $("input[name='namebox']").sendKeys(<string> name);
@@ -35,5 +58,10 @@ defineSupportCode(function ({ Given, When, Then }) {
     Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
         var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
         allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    })
+    
+    Then(/^I can't see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
+        var allalunos : ElementArrayFinder = element.all(by.name('alunolist'));
+        allalunos.filter(elem => pAND(sameCPF(elem,cpf),sameName(elem,name))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
     });
 })
